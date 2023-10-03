@@ -1,7 +1,9 @@
 #include <stdio.h>
 
 #include "debug.h"
+//> debug-include-value
 #include "value.h"
+//< debug-include-value
 
 void disassembleChunk(Chunk *chunk, const char *name) {
     printf("== %s ==\n", name);
@@ -17,16 +19,18 @@ static int simpleInstruction(const char* name, int offset) {
     return offset + 1;
 }
 
+//> constant-instruction
 static int constantInstruction(const char* name, Chunk* chunk,
                                int offset) {
   uint8_t constant = chunk->code[offset + 1];
   printf("%-16s %4d '", name, constant);
   printValue(chunk->constants.values[constant]);
   printf("'\n");
-
-  return offset+2;
+//> return-after-operand
+  return offset + 2;
+//< return-after-operand
 }
-
+//< constant-instruction
 
 int disassembleInstruction(Chunk *chunk, int offset) {
     printf("%04d: ", offset);
