@@ -8,7 +8,8 @@
         "compiler.h": "c",
         "scanner.h": "c",
         "cstring": "c",
-        "locale": "c"
+        "locale": "c",
+        "stdlib.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
