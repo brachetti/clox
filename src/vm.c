@@ -37,8 +37,10 @@ static InterpretResult run() {
         {
             Value constant = READ_CONSTANT();
             push(constant);
-            // printValue(constant);
-            // printf("\n");
+            break;
+        }
+        case OP_NEGATE: {
+            push(-pop());
             break;
         }
         }
