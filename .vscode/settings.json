@@ -10,7 +10,9 @@
         "cstring": "c",
         "locale": "c",
         "stdlib.h": "c",
-        "__locale": "c"
+        "__locale": "c",
+        "unordered_map": "c",
+        "chrono": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
