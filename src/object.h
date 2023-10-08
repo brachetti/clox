@@ -30,14 +30,14 @@ struct Obj {
 
 struct ObjString {
   struct Obj obj;
-  int length;
-  char* chars;
+  int        length;
+  char*      chars;
 };
 //< obj-string
 
 ObjString* takeString(char* chars, int length);
 ObjString* copyString(const char* chars, int length);
-void printObject(Value value);
+void       printObject(Value value);
 
 //< copy-string-h
 //> is-obj-type

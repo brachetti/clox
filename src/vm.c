@@ -11,8 +11,8 @@
 VM vm;
 
 static Value peek(int distance);
-static bool isFalsey(Value value);
-static void concatenate();
+static bool  isFalsey(Value value);
+static void  concatenate();
 
 static void resetStack() { vm.stackTop = vm.stack; }
 
@@ -24,7 +24,7 @@ static void runtimeError(const char* format, ...) {
   fputs("\n", stderr);
 
   size_t instruction = vm.ip - vm.chunk->code - 1;
-  int line = vm.chunk->lines[instruction];
+  int    line        = vm.chunk->lines[instruction];
   fprintf(stderr, "[line %d] in script\n", line);
   resetStack();
 }
@@ -141,7 +141,7 @@ InterpretResult interpret(const char* source) {
   }
 
   vm.chunk = &chunk;
-  vm.ip = vm.chunk->code;
+  vm.ip    = vm.chunk->code;
 
   InterpretResult result = run();
 
@@ -173,8 +173,8 @@ static void concatenate() {
   ObjString* b = AS_STRING(pop());
   ObjString* a = AS_STRING(pop());
 
-  int length = a->length + b->length;
-  char* chars = ALLOCATE(char, length + 1);
+  int   length = a->length + b->length;
+  char* chars  = ALLOCATE(char, length + 1);
   memcpy(chars, a->chars, a->length);
   memcpy(chars + a->length, b->chars, b->length);
   chars[length] = '\0';

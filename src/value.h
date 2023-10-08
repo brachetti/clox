@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-typedef struct Obj Obj;
+typedef struct Obj       Obj;
 typedef struct ObjString ObjString;
 
 typedef enum { VAL_BOOL, VAL_NIL, VAL_NUMBER, VAL_OBJ } ValueType;
@@ -11,9 +11,9 @@ typedef enum { VAL_BOOL, VAL_NIL, VAL_NUMBER, VAL_OBJ } ValueType;
 typedef struct {
   ValueType type;
   union {
-    bool boolean;
+    bool   boolean;
     double number;
-    Obj* obj;
+    Obj*   obj;
   } as;
 } Value;
 
@@ -32,8 +32,8 @@ typedef struct {
 #define OBJ_VAL(object) ((Value){VAL_OBJ, {.obj = (Obj*)object}})
 
 typedef struct {
-  int capacity;
-  int count;
+  int    capacity;
+  int    count;
   Value* values;
 } ValueArray;
 

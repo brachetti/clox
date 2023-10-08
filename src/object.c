@@ -11,7 +11,7 @@
   (type*)allocateObject(sizeof(type), objectType)
 
 static Obj* allocateObject(size_t size, ObjType type) {
-  Obj* object = (Obj*)reallocate(NULL, 0, size);
+  Obj* object  = (Obj*)reallocate(NULL, 0, size);
   object->type = type;
 
   return object;
@@ -19,8 +19,8 @@ static Obj* allocateObject(size_t size, ObjType type) {
 
 static ObjString* allocateString(char* chars, int length) {
   ObjString* string = ALLOCATE_OBJ(ObjString, OBJ_STRING);
-  string->length = length;
-  string->chars = chars;
+  string->length    = length;
+  string->chars     = chars;
 
   return string;
 }

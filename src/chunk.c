@@ -6,10 +6,10 @@
 #include "value.h"
 
 void initChunk(Chunk* chunk) {
-  chunk->count = 0;
+  chunk->count    = 0;
   chunk->capacity = 0;
-  chunk->code = NULL;
-  chunk->lines = NULL;
+  chunk->code     = NULL;
+  chunk->lines    = NULL;
   initValueArray(&chunk->constants);
 }
 
@@ -30,7 +30,7 @@ void writeChunk(Chunk* chunk, uint8_t byte, int line) {
     chunk->lines = GROW_ARRAY(int, chunk->lines, oldCapacity, chunk->capacity);
   }
 
-  chunk->code[chunk->count] = byte;
+  chunk->code[chunk->count]  = byte;
   chunk->lines[chunk->count] = line;
   chunk->count++;
 }
