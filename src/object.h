@@ -25,7 +25,8 @@ typedef enum { OBJ_STRING } ObjType;
 //< obj-type
 
 struct Obj {
-  ObjType type;
+  ObjType     type;
+  struct Obj* next;
 };
 
 struct ObjString {

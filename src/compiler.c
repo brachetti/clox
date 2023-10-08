@@ -64,15 +64,15 @@ typedef struct {
 Parser parser;
 //< Compiling Expressions parser
 
-Chunk *compilingChunk;
+Chunk* compilingChunk;
 
 //> Calls and Functions current-chunk
-static Chunk *currentChunk() { return compilingChunk; }
+static Chunk* currentChunk() { return compilingChunk; }
 //< Calls and Functions current-chunk
 
 //< Compiling Expressions compiling-chunk
 //> Compiling Expressions error-at
-static void errorAt(Token *token, const char *message) {
+static void errorAt(Token* token, const char* message) {
   //> check-panic-mode
   if (parser.panicMode) return;
   //< check-panic-mode
@@ -94,10 +94,10 @@ static void errorAt(Token *token, const char *message) {
 }
 //< Compiling Expressions error-at
 //> Compiling Expressions error
-static void error(const char *message) { errorAt(&parser.previous, message); }
+static void error(const char* message) { errorAt(&parser.previous, message); }
 //< Compiling Expressions error
 //> Compiling Expressions error-at-current
-static void errorAtCurrent(const char *message) {
+static void errorAtCurrent(const char* message) {
   errorAt(&parser.current, message);
 }
 //< Compiling Expressions error-at-current
@@ -116,7 +116,7 @@ static void advance() {
 //< Compiling Expressions advance
 
 //> Compiling Expressions consume
-static void consume(TokenType type, const char *message) {
+static void consume(TokenType type, const char* message) {
   if (parser.current.type == type) {
     advance();
     return;
@@ -162,7 +162,7 @@ static void endCompiler() {
 
 static void expression();
 //< Global Variables forward-declarations
-static ParseRule *getRule(TokenType type);
+static ParseRule* getRule(TokenType type);
 static void       parsePrecedence(Precedence precedence);
 
 static void expression() { parsePrecedence(PREC_ASSIGNMENT); }
@@ -188,7 +188,7 @@ static void emitConstant(Value value) {
 //> Compiling Expressions binary
 static void binary() {
   TokenType  operatorType = parser.previous.type;
-  ParseRule *rule         = getRule(operatorType);
+  ParseRule* rule         = getRule(operatorType);
   parsePrecedence((Precedence)(rule->precedence + 1));
 
   switch (operatorType) {
@@ -358,10 +358,10 @@ static void parsePrecedence(Precedence precedence) {
 //< Compiling Expressions parse-precedence
 
 //> Compiling Expressions get-rule
-static ParseRule *getRule(TokenType type) { return &rules[type]; }
+static ParseRule* getRule(TokenType type) { return &rules[type]; }
 //< Compiling Expressions get-rule
 
-bool compile(const char *source, Chunk *chunk) {
+bool compile(const char* source, Chunk* chunk) {
   initScanner(source);
   compilingChunk = chunk;
 

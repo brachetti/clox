@@ -6,14 +6,14 @@
 #include "common.h"
 
 typedef struct {
-  const char *start;
-  const char *current;
+  const char* start;
+  const char* current;
   int         line;
 } Scanner;
 
 Scanner scanner;
 
-void initScanner(const char *source) {
+void initScanner(const char* source) {
   scanner.start   = source;
   scanner.current = source;
   scanner.line    = 1;
@@ -31,7 +31,7 @@ static Token makeToken(TokenType type) {
   return token;
 }
 
-static Token errorToken(const char *message) {
+static Token errorToken(const char* message) {
   Token token;
   token.type   = TOKEN_ERROR;
   token.start  = message;
@@ -107,7 +107,7 @@ static bool isAlpha(char c) {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 }
 
-static TokenType checkKeyword(int start, int length, const char *rest,
+static TokenType checkKeyword(int start, int length, const char* rest,
                               TokenType type) {
   if (scanner.current - scanner.start == start + length &&
       memcmp(scanner.start + start, rest, length) == 0) {

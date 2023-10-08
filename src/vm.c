@@ -149,9 +149,12 @@ InterpretResult interpret(const char* source) {
   return result;
 }
 
-void initVM() { resetStack(); }
+void initVM() {
+  resetStack();
+  vm.objects = NULL;
+}
 
-void freeVM() {}
+void freeVM() { freeObjects(); }
 
 void push(Value value) {
   *vm.stackTop = value;
