@@ -12,7 +12,22 @@
         "stdlib.h": "c",
         "__locale": "c",
         "unordered_map": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "__bit_reference": "cpp",
+        "__node_handle": "cpp",
+        "atomic": "cpp",
+        "bitset": "cpp",
+        "__memory": "cpp",
+        "limits": "cpp",
+        "optional": "cpp",
+        "ratio": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "vector": "cpp",
+        "object.h": "c",
+        "string": "c",
+        "string_view": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

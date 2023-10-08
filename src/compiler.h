@@ -7,6 +7,8 @@
 //> Compiling Expressions compile-h
 #include "chunk.h"
 //< Compiling Expressions compile-h
+#include "object.h"
+#include "vm.h"
 
 //> Calls and Functions compile-h
 
