@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "common.h"
 #include "chunk.h"
+#include "common.h"
 #include "debug.h"
 #include "vm.h"
 
@@ -51,16 +51,16 @@ static char* readFile(const char* path) {
 static void runFile(const char* path) {
   char* source = readFile(path);
   InterpretResult result = interpret(source);
-  free(source); 
+  free(source);
 
   if (result == INTERPRET_COMPILE_ERROR) exit(65);
   if (result == INTERPRET_RUNTIME_ERROR) exit(70);
 }
 
-int main(int argc, const char *argv[]) {
-    initVM();
+int main(int argc, const char* argv[]) {
+  initVM();
 
-    if (argc == 1) {
+  if (argc == 1) {
     repl();
   } else if (argc == 2) {
     runFile(argv[1]);
@@ -68,9 +68,9 @@ int main(int argc, const char *argv[]) {
     fprintf(stderr, "Usage: clox [path]\n");
     exit(64);
   }
-    
-    freeVM();
 
-    printf("\n\n");
-    return 0;
+  freeVM();
+
+  printf("\n\n");
+  return 0;
 }
