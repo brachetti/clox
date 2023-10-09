@@ -27,7 +27,11 @@
         "vector": "cpp",
         "object.h": "c",
         "string": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "table.h": "c",
+        "__threading_support": "c",
+        "variant": "c",
+        "__split_buffer": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
