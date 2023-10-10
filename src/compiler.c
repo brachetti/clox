@@ -115,7 +115,6 @@ static void advance() {
 }
 //< Compiling Expressions advance
 
-//> Compiling Expressions consume
 static void consume(TokenType type, const char* message) {
   if (parser.current.type == type) {
     advance();
@@ -124,7 +123,14 @@ static void consume(TokenType type, const char* message) {
 
   errorAtCurrent(message);
 }
-//< Compiling Expressions consume
+
+static bool check(TokenType type) { return parser.current.type == type; }
+
+static bool match(TokenType type) {
+  if (!check(type)) return false;
+  advance();
+  return true;
+}
 
 //> Compiling Expressions emit-byte
 static void emitByte(uint8_t byte) {
@@ -145,27 +151,70 @@ static void emitReturn() {
 }
 //< Compiling Expressions emit-return
 
-//> Calls and Functions end-compiler
 static void endCompiler() {
-  //< Calls and Functions end-compiler
   emitReturn();
 #ifdef DEBUG_PRINT_CODE
   if (!parser.hadError) {
     disassembleChunk(currentChunk(), "code");
   }
 #endif
-  //< Calls and Functions return-function
 }
-//< Compiling Expressions end-compiler
 
-//> Compiling Expressions forward-declarations
-
-static void expression();
-//< Global Variables forward-declarations
+static void       expression();
+static void       statement();
+static void       declaration();
 static ParseRule* getRule(TokenType type);
 static void       parsePrecedence(Precedence precedence);
 
 static void expression() { parsePrecedence(PREC_ASSIGNMENT); }
+
+static void printStatement() {
+  expression();
+  consume(TOKEN_SEMICOLON, "Expect ';' after expression.");
+  emitByte(OP_PRINT);
+}
+
+static void synchronize() {
+  parser.panicMode = false;
+
+  while (parser.current.type != TOKEN_EOF) {
+    if (parser.previous.type == TOKEN_SEMICOLON) return;
+    switch (parser.current.type) {
+      case TOKEN_CLASS:
+      case TOKEN_FUN:
+      case TOKEN_VAR:
+      case TOKEN_FOR:
+      case TOKEN_IF:
+      case TOKEN_WHILE:
+      case TOKEN_PRINT:
+      case TOKEN_RETURN:
+        return;
+
+      default:;  // Do nothing.
+    }
+
+    advance();
+  }
+}
+
+static void expressionStatement() {
+  expression();
+  consume(TOKEN_SEMICOLON, "Expect ';' after expression.");
+  emitByte(OP_POP);
+}
+
+static void declaration() {
+  statement();
+  if (parser.panicMode) synchronize();
+}
+
+static void statement() {
+  if (match(TOKEN_PRINT)) {
+    printStatement();
+  } else {
+    expressionStatement();
+  }
+}
 
 //> Compiling Expressions make-constant
 static uint8_t makeConstant(Value value) {
@@ -369,8 +418,11 @@ bool compile(const char* source, Chunk* chunk) {
   parser.hadError  = false;
 
   advance();
-  expression();
-  consume(TOKEN_EOF, "Expect end of expression.");
+
+  while (!match(TOKEN_EOF)) {
+    declaration();
+  }
+
   endCompiler();
 
   return !parser.hadError;

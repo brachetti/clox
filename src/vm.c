@@ -56,9 +56,13 @@ static InterpretResult run() {
 #endif
     uint8_t instruction;
     switch (instruction = READ_BYTE()) {
-      case OP_RETURN: {
+      case OP_PRINT: {
         printValue(pop());
         printf("\n");
+        break;
+      }
+      case OP_RETURN: {
+        // Exit interpreter
         return INTERPRET_OK;
       }
       case OP_CONSTANT: {
@@ -110,6 +114,9 @@ static InterpretResult run() {
         break;
       case OP_FALSE:
         push(BOOL_VAL(false));
+        break;
+      case OP_POP:
+        pop();
         break;
       case OP_EQUAL: {
         Value b = pop();
@@ -177,8 +184,14 @@ static bool isFalsey(Value value) {
 }
 
 static void concatenate() {
-  ObjString* b = AS_STRING(pop());
-  ObjString* a = AS_STRING(pop());
+  /* Strings concatenate < Garbage Collection concatenate-peek
+    ObjString* b = AS_STRING(pop());
+    ObjString* a = AS_STRING(pop());
+  */
+  //> Garbage Collection concatenate-peek
+  ObjString* b = AS_STRING(peek(0));
+  ObjString* a = AS_STRING(peek(1));
+  //< Garbage Collection concatenate-peek
 
   int   length = a->length + b->length;
   char* chars  = ALLOCATE(char, length + 1);
@@ -187,5 +200,9 @@ static void concatenate() {
   chars[length] = '\0';
 
   ObjString* result = takeString(chars, length);
+  //> Garbage Collection concatenate-pop
+  pop();
+  pop();
+  //< Garbage Collection concatenate-pop
   push(OBJ_VAL(result));
 }

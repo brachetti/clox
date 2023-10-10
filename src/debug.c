@@ -69,6 +69,10 @@ int disassembleInstruction(Chunk* chunk, int offset) {
       return simpleInstruction("OP_GREATER", offset);
     case OP_LESS:
       return simpleInstruction("OP_LESS", offset);
+    case OP_PRINT:
+      return simpleInstruction("OP_PRINT", offset);
+    case OP_POP:
+      return simpleInstruction("OP_POP", offset);
     default:
       printf("Unknown instruction %d\n", instruction);
       return offset + 1;
