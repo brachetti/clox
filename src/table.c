@@ -28,14 +28,14 @@ static Entry* findEntry(Entry* entries, int capacity, ObjString* key) {
     Entry* entry = &entries[index];
     if (entry->key == NULL) {
       if (IS_NIL(entry->value)) {
-        // empty entry
-        // return tombstone, so the slot can be re-used
+        // Empty entry.
         return tombstone != NULL ? tombstone : entry;
+      } else {
+        // We found a tombstone.
+        if (tombstone == NULL) tombstone = entry;
       }
-      // We found a tombstone.
-      if (tombstone == NULL) tombstone = entry;
     } else if (entry->key == key) {
-      // found it!
+      // We found the key.
       return entry;
     }
 
@@ -123,14 +123,17 @@ ObjString* tableFindString(Table* table, const char* chars, int length,
     if (entry->key == NULL) {
       // Stop if we find an empty non-tombstone entry.
       if (IS_NIL(entry->value)) return NULL;
-    } else if (entry->key->length == length && entry->key->hash == hash &&
-               memcmp(entry->key->chars, chars, length) == 0) {
-      // We found it.
-      return entry->key;
+    } else {
+      if (entry->key->length == length) {
+        if (entry->key->hash == hash) {
+          if (memcmp(entry->key->chars, chars, length) == 0) {
+            // We found it.
+            return entry->key;
+          }
+        }
+      }
     }
 
     index = (index + 1) % table->capacity;
   }
-
-  return NULL;
 }
