@@ -31,7 +31,12 @@
         "table.h": "c",
         "__threading_support": "c",
         "variant": "c",
-        "__split_buffer": "c"
+        "__split_buffer": "c",
+        "stdexcept": "c",
+        "__config": "c",
+        "iosfwd": "c",
+        "ios": "c",
+        "typeinfo": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
