@@ -4,3 +4,4 @@ target/**
 test.lox
 test*.lox
 .idea/**
+cmake-build-debug/**
