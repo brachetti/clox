@@ -1,6 +1,5 @@
 #include "vm.h"
 
-#include <opencl-c-base.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
